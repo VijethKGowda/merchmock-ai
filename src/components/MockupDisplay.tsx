@@ -21,16 +21,16 @@ export const MockupDisplay: React.FC<MockupDisplayProps> = ({ imageUrl, isGenera
 
   if (isGenerating) {
     return (
-      <div className="aspect-square border-4 border-brutal-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center gap-6 p-12 text-center">
+      <div className="aspect-square border-4 border-brutal-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center gap-4 p-8 text-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
         >
-          <Loader2 size={64} className="text-neon-green" />
+          <Loader2 size={48} className="text-neon-green" />
         </motion.div>
         <div>
-          <h2 className="font-display text-4xl uppercase">Processing...</h2>
-          <p className="font-mono mt-4">AI is placing your logo on the product</p>
+          <h2 className="font-display text-3xl uppercase">Processing...</h2>
+          <p className="font-mono text-xs mt-2">AI is placing your logo on the product</p>
         </div>
       </div>
     );
@@ -38,19 +38,19 @@ export const MockupDisplay: React.FC<MockupDisplayProps> = ({ imageUrl, isGenera
 
   if (!imageUrl) {
     return (
-      <div className="aspect-square border-4 border-brutal-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center p-12 text-center">
+      <div className="aspect-square border-4 border-brutal-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center p-8 text-center">
         <div className="opacity-20">
-          <h2 className="font-display text-6xl uppercase">No Preview</h2>
-          <p className="font-mono mt-4">Select a product and generate</p>
+          <h2 className="font-display text-5xl uppercase">No Preview</h2>
+          <p className="font-mono text-xs mt-2">Select a product and generate</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <div className="relative group">
-        <div className="border-4 border-brutal-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+        <div className="border-4 border-brutal-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
           <img 
             src={imageUrl} 
             alt="Mockup Preview" 
@@ -59,26 +59,26 @@ export const MockupDisplay: React.FC<MockupDisplayProps> = ({ imageUrl, isGenera
           />
         </div>
         
-        <div className="absolute -bottom-6 -right-6 flex gap-4">
+        <div className="absolute -bottom-4 -right-4 flex gap-3">
           <button
             onClick={onRegenerate}
-            className="bg-white border-4 border-brutal-black p-4 hover:bg-neon-green transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            className="bg-white border-4 border-brutal-black p-3 hover:bg-neon-green transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
             title="Regenerate"
           >
-            <RefreshCw size={24} />
+            <RefreshCw size={20} />
           </button>
           <button
             onClick={handleDownload}
-            className="bg-neon-green border-4 border-brutal-black p-4 hover:bg-white transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2"
+            className="bg-neon-green border-4 border-brutal-black p-3 hover:bg-white transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-2"
           >
-            <Download size={24} />
-            <span className="font-display uppercase">Export</span>
+            <Download size={20} />
+            <span className="font-display text-sm uppercase">Export</span>
           </button>
         </div>
       </div>
       
-      <div className="bg-brutal-black text-white p-4 font-mono text-xs uppercase tracking-widest">
-        Status: Print-ready file generated // 300 DPI // CMYK Compatible
+      <div className="bg-brutal-black text-white p-3 font-mono text-[10px] uppercase tracking-widest">
+        Status: Print-ready file generated // 300 DPI
       </div>
     </div>
   );

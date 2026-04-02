@@ -67,137 +67,139 @@ export default function App() {
         </div>
       </div>
 
-      <main className="flex-1 grid grid-cols-1 lg:grid-cols-[450px_1fr] h-[calc(100vh-40px)] overflow-hidden">
-        {/* Left Sidebar: Controls */}
-        <div className="border-r-4 border-brutal-black bg-gallery-white p-8 overflow-y-auto flex flex-col gap-12 custom-scrollbar">
-          {/* Logo Section */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-brutal-black text-white flex items-center justify-center font-display text-xl">01</div>
-              <h2 className="font-display text-3xl uppercase">Upload Logo</h2>
-            </div>
-            <ImageUpload 
-              image={logo} 
-              onUpload={setLogo} 
-              onClear={() => {
-                setLogo(null);
-                setMockupUrl(null);
-              }} 
-              label="Drop your logo"
-            />
-          </section>
-
-          {/* Product Section */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-brutal-black text-white flex items-center justify-center font-display text-xl">02</div>
-              <h2 className="font-display text-3xl uppercase">Product Selection</h2>
-            </div>
-            
-            {/* Mode Toggle */}
-            <div className="flex border-4 border-brutal-black mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <button
-                onClick={() => setProductMode('preset')}
-                className={cn(
-                  "flex-1 py-3 font-display uppercase text-sm transition-colors flex items-center justify-center gap-2",
-                  productMode === 'preset' ? "bg-neon-green" : "bg-white hover:bg-neon-green/10"
-                )}
-              >
-                <Box size={16} />
-                Presets
-              </button>
-              <button
-                onClick={() => setProductMode('upload')}
-                className={cn(
-                  "flex-1 py-3 font-display uppercase text-sm transition-colors border-l-4 border-brutal-black flex items-center justify-center gap-2",
-                  productMode === 'upload' ? "bg-neon-green" : "bg-white hover:bg-neon-green/10"
-                )}
-              >
-                <Upload size={16} />
-                Upload
-              </button>
-            </div>
-
-            <AnimatePresence mode="wait">
-              {productMode === 'preset' ? (
-                <motion.div
-                  key="preset"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                >
-                  <ProductDropdown
-                    products={PRODUCTS}
-                    selectedProduct={selectedProduct}
-                    onSelect={setSelectedProduct}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="upload"
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                >
-                  <ImageUpload 
-                    image={customProduct} 
-                    onUpload={setCustomProduct} 
-                    onClear={() => {
-                      setCustomProduct(null);
-                      setMockupUrl(null);
-                    }} 
-                    label="Upload Product"
-                    subLabel="Upload a photo of your own product"
-                    icon={<Box size={32} />}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </section>
-
-          {/* Action Button */}
-          <button
-            disabled={!logo || (productMode === 'preset' ? !selectedProduct : !customProduct) || isGenerating}
-            onClick={handleGenerate}
-            className="w-full bg-brutal-black text-white p-6 font-display text-2xl uppercase hover:bg-neon-green hover:text-brutal-black transition-all disabled:opacity-30 disabled:cursor-not-allowed group relative overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,255,0,0.3)]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-3">
-              {isGenerating ? 'Generating...' : 'Generate Mockup'}
-              <Sparkles className={isGenerating ? 'animate-pulse' : 'group-hover:rotate-12 transition-transform'} />
-            </span>
-          </button>
-
-          <div className="mt-auto pt-8 border-t-2 border-brutal-black/10 flex items-start gap-3 text-xs font-mono opacity-50">
-            <Info size={16} className="shrink-0" />
-            <p>AI-generated mockups may vary in placement. For best results, use high-resolution PNG logos with transparent backgrounds.</p>
-          </div>
-        </div>
-
-        {/* Right Content: Preview */}
-        <div className="bg-[#f0f0f0] p-12 flex flex-col items-center justify-center relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
-          
-          <div className="w-full max-w-2xl relative z-10">
-            {error && (
-              <div className="mb-8 bg-red-500 text-white border-4 border-brutal-black p-4 font-mono text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                ERROR // {error}
+      <div className="flex-1 p-6 lg:p-10 pb-20">
+        <main className="h-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[450px_1fr] border-4 border-brutal-black bg-white shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+          {/* Left Sidebar: Controls */}
+          <div className="border-r-4 border-brutal-black bg-gallery-white p-8 overflow-y-auto flex flex-col gap-12 custom-scrollbar">
+            {/* Logo Section */}
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 bg-brutal-black text-white flex items-center justify-center font-display text-xl">01</div>
+                <h2 className="font-display text-3xl uppercase">Upload Logo</h2>
               </div>
-            )}
-            <MockupDisplay 
-              imageUrl={mockupUrl} 
-              isGenerating={isGenerating} 
-              onRegenerate={handleGenerate}
-            />
+              <ImageUpload 
+                image={logo} 
+                onUpload={setLogo} 
+                onClear={() => {
+                  setLogo(null);
+                  setMockupUrl(null);
+                }} 
+                label="Drop your logo"
+              />
+            </section>
+
+            {/* Product Section */}
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 bg-brutal-black text-white flex items-center justify-center font-display text-xl">02</div>
+                <h2 className="font-display text-3xl uppercase">Product Selection</h2>
+              </div>
+              
+              {/* Mode Toggle */}
+              <div className="flex border-4 border-brutal-black mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <button
+                  onClick={() => setProductMode('preset')}
+                  className={cn(
+                    "flex-1 py-3 font-display uppercase text-sm transition-colors flex items-center justify-center gap-2",
+                    productMode === 'preset' ? "bg-neon-green" : "bg-white hover:bg-neon-green/10"
+                  )}
+                >
+                  <Box size={16} />
+                  Presets
+                </button>
+                <button
+                  onClick={() => setProductMode('upload')}
+                  className={cn(
+                    "flex-1 py-3 font-display uppercase text-sm transition-colors border-l-4 border-brutal-black flex items-center justify-center gap-2",
+                    productMode === 'upload' ? "bg-neon-green" : "bg-white hover:bg-neon-green/10"
+                  )}
+                >
+                  <Upload size={16} />
+                  Upload
+                </button>
+              </div>
+
+              <AnimatePresence mode="wait">
+                {productMode === 'preset' ? (
+                  <motion.div
+                    key="preset"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                  >
+                    <ProductDropdown
+                      products={PRODUCTS}
+                      selectedProduct={selectedProduct}
+                      onSelect={setSelectedProduct}
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="upload"
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -10 }}
+                  >
+                    <ImageUpload 
+                      image={customProduct} 
+                      onUpload={setCustomProduct} 
+                      onClear={() => {
+                        setCustomProduct(null);
+                        setMockupUrl(null);
+                      }} 
+                      label="Upload Product"
+                      subLabel="Upload a photo of your own product"
+                      icon={<Box size={32} />}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </section>
+
+            {/* Action Button */}
+            <button
+              disabled={!logo || (productMode === 'preset' ? !selectedProduct : !customProduct) || isGenerating}
+              onClick={handleGenerate}
+              className="w-full bg-brutal-black text-white p-6 font-display text-2xl uppercase hover:bg-neon-green hover:text-brutal-black transition-all disabled:opacity-30 disabled:cursor-not-allowed group relative overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,255,0,0.3)]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                {isGenerating ? 'Generating...' : 'Generate Mockup'}
+                <Sparkles className={isGenerating ? 'animate-pulse' : 'group-hover:rotate-12 transition-transform'} />
+              </span>
+            </button>
+
+            <div className="mt-auto pt-8 border-t-2 border-brutal-black/10 flex items-start gap-3 text-xs font-mono opacity-50">
+              <Info size={16} className="shrink-0" />
+              <p>AI-generated mockups may vary in placement. For best results, use high-resolution PNG logos with transparent backgrounds.</p>
+            </div>
           </div>
 
-          {/* Floating Labels */}
-          <div className="absolute top-8 right-8 font-mono text-[10px] uppercase tracking-widest text-right opacity-30">
-            Preview Mode // v1.1.0<br />
-            Render Engine: Gemini 2.5 Flash
+          {/* Right Content: Preview */}
+          <div className="bg-[#f0f0f0] p-12 flex flex-col items-center justify-center relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+            
+            <div className="w-full max-w-2xl relative z-10">
+              {error && (
+                <div className="mb-8 bg-red-500 text-white border-4 border-brutal-black p-4 font-mono text-sm uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  ERROR // {error}
+                </div>
+              )}
+              <MockupDisplay 
+                imageUrl={mockupUrl} 
+                isGenerating={isGenerating} 
+                onRegenerate={handleGenerate}
+              />
+            </div>
+
+            {/* Floating Labels */}
+            <div className="absolute top-8 right-8 font-mono text-[10px] uppercase tracking-widest text-right opacity-30">
+              Preview Mode // v1.1.0<br />
+              Render Engine: Gemini 2.5 Flash
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

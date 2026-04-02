@@ -67,19 +67,19 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     <div
       {...getRootProps()}
       className={cn(
-        "border-4 border-dashed border-brutal-black p-12 transition-all cursor-pointer bg-white hover:bg-neon-green/10",
+        "border-4 border-dashed border-brutal-black p-6 transition-all cursor-pointer bg-white hover:bg-neon-green/10",
         isDragActive && "bg-neon-green/20 border-solid scale-[1.02]",
-        "shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+        "shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
       )}
     >
       <input {...getInputProps()} />
-      <div className="flex flex-col items-center gap-4 text-center">
-        <div className="p-4 bg-neon-green border-4 border-brutal-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <div className="flex flex-col items-center gap-3 text-center">
+        <div className="p-3 bg-neon-green border-4 border-brutal-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           {icon}
         </div>
         <div>
-          <p className="font-display text-2xl uppercase">{label}</p>
-          <p className="font-mono text-sm mt-2">{subLabel}</p>
+          <p className="font-display text-xl uppercase">{label}</p>
+          <p className="font-mono text-[10px] mt-1">{subLabel}</p>
         </div>
       </div>
     </div>
